@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - '*'
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -28,27 +28,13 @@ jobs:
         run: |
           mkdir -p content
           cp README.md content
-          echo "print(Hello, JupyterLite!)" > content/test.py
+          # echo "print(Hello, JupyterLite!)" > content/test.py
           jupyter lite build --contents content --output-dir dist
       
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.7.3
         with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          branch: gh-pages
+          commit-message: 'Update JupyterLite'
+          folder: dist
+          clean: false
