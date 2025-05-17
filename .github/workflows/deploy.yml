@@ -32,7 +32,7 @@ jobs:
           jupyter lite build --contents content --output-dir dist
       
       - name: Deploy to Github Pages
-        uses: JamesIves/github-pages-deploy-action@4.7.3
+        uses: JamesIves/github-pages-deploy-action@4.2.1
         with:
           branch: gh-pages
           commit-message: 'Update JupyterLite'
