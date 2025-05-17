@@ -1,0 +1,25 @@
+name: Дополнить стрниицу GitHub Pages
+
+on:
+  push:
+    branches:
+      - 'hw*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.2.1
+        with:
+          branch: gh-pages
+          commit-message: 'Добавить данные ветки в GitHub Pages'
+          folder: homework
+          target-folder: 'files/${{ github.ref_name }}'
+          clean: false
